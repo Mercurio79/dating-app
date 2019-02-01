@@ -4,9 +4,8 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using DatingApp.API.Data;
-using DatingApp.API.Dtos;
+using DatingApp.API.DataTransferObjects;
 using DatingApp.API.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -22,8 +21,8 @@ namespace DatingApp.API.Controllers
 
         public AuthController(IAuthRepository repo, IConfiguration config)
         {
-            this._repo = repo;
-            this._config = config;
+            _repo = repo;
+            _config = config;
         }
 
         [HttpPost("register")]
@@ -65,13 +64,13 @@ namespace DatingApp.API.Controllers
             var key = new SymmetricSecurityKey(Encoding.UTF8
             .GetBytes(_config.GetSection("AppSettings:Token").Value));
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = creds
+                SigningCredentials = credentials
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

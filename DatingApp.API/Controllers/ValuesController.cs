@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DatingApp.API.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +15,7 @@ namespace DatingApp.API.Controllers
 
         public ValuesController(DataContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         // GET api/values
